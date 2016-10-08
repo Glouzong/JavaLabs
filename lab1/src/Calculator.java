@@ -2,9 +2,6 @@ import java.util.Scanner;
 
 import static java.lang.Math.*;
 
-/**
- * Created by Вадим on 09.09.2016.
- */
 public class Calculator {
 
     public static void main(String[] args) {
