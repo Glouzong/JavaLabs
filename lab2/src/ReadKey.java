@@ -2,10 +2,10 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class ReadKey {
-    final static int MAX_SIZE = 100;
+    private final static int MAX_SIZE = 100;
 
     public static void main(String[] args) {
-        String string = new String();
+        String string;
         string = getInput();
         double[] numbers = {0, 0, 0};
         try {
@@ -27,7 +27,7 @@ public class ReadKey {
         }
     }
 
-    static void sortBubble(int[] array) {
+    private static void sortBubble(int[] array) {
         int i, j;
         for (i = array.length - 1; i >= 0; i--) {
             for (j = 0; j < i; j++) {
@@ -38,16 +38,16 @@ public class ReadKey {
         }
     }
 
-    static void swap(int[] array, int i, int j) {
+    private static void swap(int[] array, int i, int j) {
         int temp = array[i];
         array[i] = array[j];
         array[j] = temp;
     }
 
-    static void getPrimenumber(int[] array) {
+    private static void getPrimenumber(int[] array) {
         int temp = 0;
-        for (int i = 0; i < array.length; i++) {
-            if (itIsPrimeNumber(array[i])) {
+        for (int anArray : array) {
+            if (itIsPrimeNumber(anArray)) {
                 temp++;
             }
         }
@@ -55,10 +55,10 @@ public class ReadKey {
         System.out.println();
     }
 
-    static void getNumberDev3(int[] array) {
+    private static void getNumberDev3(int[] array) {
         int temp = 0;
-        for (int i = 0; i < array.length; i++) {
-            if ((array[i]) % 3 == 0) {
+        for (int anArray : array) {
+            if ((anArray) % 3 == 0) {
                 temp++;
             }
         }
@@ -66,7 +66,7 @@ public class ReadKey {
         System.out.println();
     }
 
-    static boolean itIsPrimeNumber(int n) {
+    private static boolean itIsPrimeNumber(int n) {
         boolean f = true;
         int i;
         if ((n == 0) || (n == 1))
@@ -77,11 +77,10 @@ public class ReadKey {
                 break;
             }
         }
-        if (f) return true;
-        else return false;
+        return f;
     }
 
-    static int[] generation(int min) {
+    private static int[] generation(int min) {
         Random rand = new Random();
         int[] array = new int[MAX_SIZE];
         for (int i = 0; i < MAX_SIZE; i++) {
@@ -90,26 +89,25 @@ public class ReadKey {
         return array;
     }
 
-    static String getInput() {
+    private static String getInput() {
         System.out.println("Enter 3 number:");
         Scanner scan = new Scanner(System.in);
-        String string = scan.nextLine();
-        return string;
+        return scan.nextLine();
     }
 
-    static void getArray(int[] numbers) {
+    private static void getArray(int[] numbers) {
         for (int item : numbers) {
             System.out.print(item + " ");
         }
     }
 
-    static void getArray(double[] numbers) {
+    private static void getArray(double[] numbers) {
         for (double item : numbers) {
             System.out.print(item + " ");
         }
     }
 
-    static void getNumbers(double[] numbers, String string) throws Exception {
+    private static void getNumbers(double[] numbers, String string) throws Exception {
         int index = 0;
         int indicator = 0;  //0 -не было числа, 1 - число было найденно(идёт целая часть),
         // 3 и больше - число было найденно(идёт дробная часть и её разрядность), 2 - число бинарное.
@@ -209,15 +207,15 @@ public class ReadKey {
         }
     }
 
-    static double getAverage(double[] numbers) {
+    private static double getAverage(double[] numbers) {
         double sum = 0;
-        for (int i = 0; i < numbers.length; i++) {
-            sum += numbers[i];
+        for (double number : numbers) {
+            sum += number;
         }
         return sum / numbers.length;
     }
 
-    static double getMax(double[] numbers) {
+    private static double getMax(double[] numbers) {
         double max = numbers[0];
         for (int i = 1; i < numbers.length; i++) {
             if (max < numbers[i]) {
@@ -227,7 +225,7 @@ public class ReadKey {
         return max;
     }
 
-    static double getMin(double[] numbers) {
+    private static double getMin(double[] numbers) {
         double min = numbers[0];
         for (int i = 1; i < numbers.length; i++) {
             if (min > numbers[i]) {

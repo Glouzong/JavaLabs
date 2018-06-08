@@ -1,4 +1,3 @@
-
 import java.math.BigInteger;
 import java.util.Scanner;
 
@@ -10,7 +9,7 @@ public class Pascal {
         pascal(n);
     }
 
-    static void pascal(int last) {
+    private static void pascal(int last) {
         BigInteger temp;
         for (long n = 0; n <= last; n++) {
             for (long k = 0; k <= n; k++) {
@@ -24,7 +23,7 @@ public class Pascal {
         }
     }
 
-    static BigInteger factorial(long a) {
+    private static BigInteger factorial(long a) {
         BigInteger temp = BigInteger.valueOf(1);
         for (long i = 1; i <= a; i++) {
             temp = temp.multiply(BigInteger.valueOf(i));
@@ -32,7 +31,7 @@ public class Pascal {
         return temp;
     }
 
-    static int input() {
+    private static int input() {
         while (true) {
             int n;
             System.out.println("Введите количество строк треугольника паскаля от 1");

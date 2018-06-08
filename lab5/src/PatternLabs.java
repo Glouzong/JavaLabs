@@ -7,44 +7,44 @@ public class PatternLabs {
         String string;
         Scanner scan = new Scanner(System.in);
         string = scan.nextLine();
-        //System.out.println(italics(string));
-        //System.out.println(itIsTime(string));
-        //System.out.println(itIsGUID(string));
-        //System.out.println(itIsIPv4(string));
-        //System.out.println(itIsURL(string));
-        //System.out.println(itIsData(string));
-        //System.out.println(itIsChrome(string));
-        //takeToken(string);
-        //System.out.println(itIsIRC(string));
+        System.out.println(italics(string));
+        System.out.println(itIsTime(string));
+        System.out.println(itIsGUID(string));
+        System.out.println(itIsIPv4(string));
+        System.out.println(itIsURL(string));
+        System.out.println(itIsData(string));
+        System.out.println(itIsChrome(string));
+        takeToken(string);
+        System.out.println(itIsIRC(string));
     }
 
-    public static String italics(String string) {
+    private static String italics(String string) {
         java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\*[^*]+\\*");
         String buffer = " " + string + " ";
         Matcher matcher = pattern.matcher(buffer);
-        String result = "";
+        StringBuilder result = new StringBuilder();
         int begin = 1;
         while (matcher.find()) {
             String string1 = buffer.substring(matcher.start() - 1, matcher.start());
             String string2 = buffer.substring(matcher.end() - 1, matcher.end());
             if (!((string1.equals("*")) && (string2.equals("*")))) {
-                result += buffer.substring(begin, matcher.start()) + "<em>";
-                result += buffer.substring(matcher.start() + 1, matcher.end() - 1);
-                result += "</em>";
+                result.append(buffer.substring(begin, matcher.start())).append("<em>");
+                result.append(buffer.substring(matcher.start() + 1, matcher.end() - 1));
+                result.append("</em>");
                 begin = matcher.end();
             }
         }
-        result += buffer.substring(begin, buffer.length() - 1);
-        return result;
+        result.append(buffer.substring(begin, buffer.length() - 1));
+        return result.toString();
     }
 
-    public static boolean itIsTime(String string) {
+    private static boolean itIsTime(String string) {
         java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("^[0-2][0-4]:[0-5][0-9]$");
         Matcher matcher = pattern.matcher(string);
         return matcher.find();
     }
 
-    public static boolean itIsGUID(String string) {
+    private static boolean itIsGUID(String string) {
         java.util.regex.Pattern pattern1 = java.util.regex.Pattern.compile("^\\{([0-9a-fA-F]){8}\\-([0-9a-fA-F]){4}" +
                 "\\-([0-9a-fA-F]){4}\\-([0-9a-fA-F]){4}\\-([0-9,a-fA-F]){12}\\}$");
         java.util.regex.Pattern pattern2 = java.util.regex.Pattern.compile("^([0-9a-fA-F]){8}\\-([0-9a-fA-F]){4}" +
@@ -54,7 +54,7 @@ public class PatternLabs {
         return (matcher1.find() || matcher2.find());
     }
 
-    public static boolean itIsIPv4(String string) {
+    private static boolean itIsIPv4(String string) {
         Pattern pattern1 = Pattern.compile("^([0-9]{1,3})\\.([0-9]{1,3})\\." +
                 "([0-9]{1,3})\\.([0-9]{1,3})$");
         Pattern pattern2 = Pattern.compile("^([0-9]{1,10})$");
@@ -73,17 +73,11 @@ public class PatternLabs {
         }
         matcher = pattern2.matcher(string);
         if (matcher.find()) {
-            if ((matcher.group(1).length() == 10) && (matcher.group(1).compareTo("4294967296") > -1)) {
-                return false;
-            }
-            return true;
+            return (matcher.group(1).length() != 10) || (matcher.group(1).compareTo("4294967296") <= -1);
         }
         matcher = pattern3.matcher(string);
         if (matcher.find()) {
-            if ((matcher.group(1).length() == 11) && (matcher.group(1).compareTo("40000000000") > -1)) {
-                return false;
-            }
-            return true;
+            return (matcher.group(1).length() != 11) || (matcher.group(1).compareTo("40000000000") <= -1);
         }
         matcher = pattern4.matcher(string);
         if (matcher.find()) {
@@ -94,32 +88,20 @@ public class PatternLabs {
             return true;
         }
         matcher = pattern6.matcher(string);
-        if (matcher.find()) {
-            return true;
-        }
-        return false;
+        return matcher.find();
     }
 
-    public static boolean itIsURL(String string) {
+    private static boolean itIsURL(String string) {
         Pattern pattern = Pattern.compile("(https?://)?(([\\w\\-]{2,}(?<!-)\\.)*\\w{2,})(:\\d{4})?(/(\\w+/)*\\w+(\\.\\w+)?)?(\\?(\\w+=\\w+[&;])*\\w+=\\w+)?([%#]\\w+)?");
         Matcher matcher = pattern.matcher(string);
         return matcher.matches();
     }
 
-    public static boolean itIsBigYear(int temp) {
-        if (temp % 400 == 0) {
-            return true;
-        }
-        if (temp % 100 == 0) {
-            return false;
-        }
-        if (temp % 4 == 0) {
-            return true;
-        }
-        return false;
+    private static boolean itIsBigYear(int temp) {
+        return temp % 400 == 0 || temp % 100 != 0 && temp % 4 == 0;
     }
 
-    public static boolean itIsData(String string) {
+    private static boolean itIsData(String string) {
         Pattern pattern = Pattern.compile("^(([0-2][0-9])|(3[0-1]))/((1[0-2])|(0[0-9]))/((1[6-9][0-9]{2})|([2-9][0-9]{3}))");
         Matcher matcher = pattern.matcher(string);
         if (matcher.find()) {
@@ -128,31 +110,24 @@ public class PatternLabs {
                 temp = Integer.parseInt(string.substring(3, 5));
                 if (temp == 2) {
                     temp = Integer.parseInt(string.substring(0, 2));
-                    if (temp > 29) {
-                        return false;
-                    } else {
-                        return true;
-                    }
+                    return temp <= 29;
                 }
             }
             temp = Integer.parseInt(string.substring(3, 5));
             int tempDay = Integer.parseInt(string.substring(0, 2));
             temp = 28 + (temp + temp / 8) % 2 + 2 % temp + 2 / temp;
-            if (tempDay > temp) {
-                return false;
-            }
-            return true;
+            return tempDay <= temp;
         }
         return false;
     }
 
-    public static boolean itIsChrome(String string) {
+    private static boolean itIsChrome(String string) {
         Pattern pattern = Pattern.compile("^#[0-9a-fA-F]{6}$");
         Matcher matcher = pattern.matcher(string);
         return matcher.find();
     }
 
-    public static void takeToken(String string) {
+    private static void takeToken(String string) {
         Pattern pattern = Pattern.compile("(\".+\")|([\\w\\d]+-[\\w\\d]+)|([\\w\\d]+'[\\w\\d]+)|([\\w\\d]+)");
         Matcher matcher = pattern.matcher(string);
         if (matcher.find()) {
@@ -186,9 +161,7 @@ public class PatternLabs {
         System.out.println();
     }
 
-    public static boolean itIsIRC(String string) {
-        /*String url="((https?://)?(([\\w\\-]{2,}(?<!-)\\.)*\\w{2,})(:\\d{4})?(/(\\w+/)*\\w+(\\.\\w+)?)?(\\?(\\w+=\\w+[&;])*\\w+=\\w+)?([%#]\\w+)?)";
-        String nick="(\\w[\\w\\d\\-\\[\\]\\\\\\`\\^\\{\\}]*)";*/
+    private static boolean itIsIRC(String string) {
         Pattern pattern = Pattern.compile("(\\[\\:(((https?://)?(([\\w\\-]{2,}(?<!-)\\.)*\\w{2,})(:\\d{4})?(/(\\w+/)*\\w+(\\.\\w+)?)?(\\?(\\w+=\\w+[&;])*\\w+=\\w+)?([%#]\\w+)?)|(\\w[\\w\\d\\-\\[\\]\\\\\\`\\^\\{\\}]*))(\\![\\S]+)?(\\@url)? +\\])?(([a-zA-Z]+)|(\\d{3,3})) +(\\[\\:\\S*\\])?$");
         Matcher matcher = pattern.matcher(string);
         return matcher.matches();

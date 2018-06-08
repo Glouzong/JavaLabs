@@ -1,0 +1,2 @@
+/home/glouz/Документы/Java/lab6
+Root_dir

@@ -11,17 +11,17 @@ public class Calculator {
         showColculator(scan);
     }
 
-    static void showColculator(Scanner scan) {
+    private static void showColculator(Scanner scan) {
         String operatorUnary = "abs sqrt cos sin tg lg ln";// and "+ - / * % ^"
         boolean exit = true;
-        while (exit) {
+        while (true) {
             String operator = scan.next();
             if (operator.contains("exit")) {
                 exit = false;
                 break;
             }
             try {
-                if (operatorUnary.indexOf(operator) == -1) {
+                if (!operatorUnary.contains(operator)) {
                     enterBinaryOperator(scan, operator);
                 } else {
                     enterUnaryOperator(scan, operator);
@@ -32,7 +32,7 @@ public class Calculator {
         }
     }
 
-    static void enterUnaryOperator(Scanner scan, String operator) throws Exception {
+    private static void enterUnaryOperator(Scanner scan, String operator) throws Exception {
         double number1 = scan.nextDouble();
         switch (operator) {
             case "abs":
@@ -60,9 +60,9 @@ public class Calculator {
         System.out.println("________________________________");
     }
 
-    static void enterBinaryOperator(Scanner scan, String operator) throws Exception {
+    private static void enterBinaryOperator(Scanner scan, String operator) throws Exception {
         double number1 = Double.parseDouble(operator);
-        operator = new String(scan.next());
+        operator = scan.next();
         String operators = "abs sqrt cos sin tg lg ln + - / * % ^";
         if (!operators.contains(operator)) {
             throw new Exception();
@@ -90,6 +90,4 @@ public class Calculator {
         }
         System.out.println("________________________________");
     }
-
-
 }
